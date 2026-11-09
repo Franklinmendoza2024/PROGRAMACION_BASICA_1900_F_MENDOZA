@@ -326,7 +326,7 @@ int main() {
             double comisionACH = 0;
 
             cout << "\n--- DATOS DE TRANSFERENCIA BANCARIA ---\n";
-            cout << "Cuenta de destino fija (BAC Credomatic): 7908409200\n";
+            cout << "Cuenta de destino BAC Credomatic: 7908409200\n";
             cout << "Ingrese el nombre de su banco emisor: ";
             cin >> bancoEmisor;
 
