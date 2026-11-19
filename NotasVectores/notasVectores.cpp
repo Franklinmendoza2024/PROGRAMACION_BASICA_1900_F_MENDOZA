@@ -1,26 +1,33 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <iomanip>
 
 using namespace std;
 
-// Funcion para validar que el nombre solo tenga letras y espacios sin <cctype>
-bool nombreValido(string nombre) {
-    bool tieneLetra = false;
+// Vectores para almacenar los datos de hasta 15 estudiantes
+vector<string> nombresEstudiantes(15);
+vector<string> numeroCuentaEstudiante(15);
+vector<int> edadEstudiante(15);
+vector<char> sexoEstudiante(15);
+vector<string> carreraEstudiante(15);
 
-    for (char caracter : nombre) {
-        if ((caracter >= 'A' && caracter <= 'Z') || (caracter >= 'a' && caracter <= 'z')) {
-            tieneLetra = true;
-        } else if (caracter != ' ') {
-            return false;
-        }
-    }
+vector<float> notas1(15);
+vector<float> notas2(15);
+vector<float> notas3(15);
 
-    return tieneLetra;
-}
+vector<float> pond1(15);
+vector<float> pond2(15);
+vector<float> pond3(15);
 
-// Funcion para convertir minuscula a mayuscula sin <cctype>
+vector<string> obsParcial1(15);
+vector<string> obsParcial2(15);
+vector<string> obsParcial3(15);
+
+vector<float> notasFinales(15);
+vector<string> observacionEstudiante(15);
+
+int i = 0;
+
 char aMayuscula(char c) {
     if (c >= 'a' && c <= 'z') {
         return c - 'a' + 'A';
@@ -28,129 +35,131 @@ char aMayuscula(char c) {
     return c;
 }
 
-// Funcion para limpiar caracteres restantes en cin sin usar <limits>
-void limpiarEntrada() {
-    char c;
-    while (cin.get(c) && c != '\n') {
-        // Descarta caracteres hasta el salto de linea
-    }
-}
-
-// Funcion para obtener la observacion segun el puntaje (base 100 o nota final)
-string obtenerObservacion(double puntaje) {
-    if (puntaje >= 65.0) {
+string evaluarEstado(float nota) {
+    if (nota >= 65) {
         return "Aprobado";
     } else {
         return "Reprobado";
     }
 }
 
-int main() {
-    int cantidad = 4; // Puedes cambiar este numero segun los estudiantes a registrar
+float pedirNota(string mensaje) {
+    float nota;
+    cout << mensaje;
+    cin >> nota;
+    while (nota < 0 || nota > 100) {
+        cout << "Nota fuera de rango (0-100)." << endl;
+        cout << mensaje;
+        cin >> nota;
+    }
+    return nota;
+}
 
-    vector<string> nombreEstudiante(cantidad);
-    vector<long long> numeroCuentaEstudiante(cantidad);
-    vector<int> edadEstudiante(cantidad);
-    vector<char> sexoEstudiante(cantidad);
-    vector<string> carreraEstudiante(cantidad);
+string elegirCarrera() {
+    int opcion;
+    cout << "\n--- MENU DE CARRERAS ---" << endl;
+    cout << "1. Informatica Administrativa" << endl;
+    cout << "2. Medicina" << endl;
+    cout << "3. Trabajo Social" << endl;
+    cout << "4. Derecho" << endl;
+    cout << "Seleccione una opcion (1-4): ";
+    cin >> opcion;
 
-    vector<double> nota1(cantidad);
-    vector<double> nota2(cantidad);
-    vector<double> nota3(cantidad);
-
-    vector<double> pond1(cantidad);
-    vector<double> pond2(cantidad);
-    vector<double> pond3(cantidad);
-
-    vector<string> observacion1(cantidad);
-    vector<string> observacion2(cantidad);
-    vector<string> observacion3(cantidad);
-
-    vector<double> notaFinal(cantidad);
-    vector<string> ponderacionFinal(cantidad);
-
-    for (int i = 0; i < cantidad; i++) {
-        cout << "\n============================================\n";
-        cout << "Registro del estudiante " << i + 1 << endl;
-        cout << "============================================\n";
-
-        cout << "Ingrese el nombre del estudiante: ";
-        getline(cin, nombreEstudiante[i]);
-
-        while (!nombreValido(nombreEstudiante[i])) {
-            cout << "Error: ingrese un nombre valido (solo letras y espacios).\n";
-            cout << "Ingrese nuevamente el nombre: ";
-            getline(cin, nombreEstudiante[i]);
-        }
-
-        cout << "Ingrese el numero de cuenta: ";
-        cin >> numeroCuentaEstudiante[i];
-
-        cout << "Ingrese la edad: ";
-        cin >> edadEstudiante[i];
-
-        cout << "Ingrese el sexo (M/F): ";
-        cin >> sexoEstudiante[i];
-        sexoEstudiante[i] = aMayuscula(sexoEstudiante[i]);
-
-        limpiarEntrada();
-        cout << "Ingrese la carrera: ";
-        getline(cin, carreraEstudiante[i]);
-
-        cout << "Ingrese la nota 1 (base 100, vale 25%): ";
-        cin >> nota1[i];
-
-        cout << "Ingrese la nota 2 (base 100, vale 35%): ";
-        cin >> nota2[i];
-
-        cout << "Ingrese la nota 3 (base 100, vale 40%): ";
-        cin >> nota3[i];
-
-        limpiarEntrada();
-
-        // Ponderacion de cada parcial
-        pond1[i] = nota1[i] * 0.25;
-        pond2[i] = nota2[i] * 0.35;
-        pond3[i] = nota3[i] * 0.40;
-
-        // Observacion por cada parcial (mayor o igual a 65 -> Aprobado, menor -> Reprobado)
-        observacion1[i] = obtenerObservacion(nota1[i]);
-        observacion2[i] = obtenerObservacion(nota2[i]);
-        observacion3[i] = obtenerObservacion(nota3[i]);
-
-        // Nota final y ponderacion general
-        notaFinal[i] = pond1[i] + pond2[i] + pond3[i];
-        ponderacionFinal[i] = obtenerObservacion(notaFinal[i]);
+    while (opcion < 1 || opcion > 4) {
+        cout << "Opcion invalida. Seleccione 1, 2, 3 o 4: ";
+        cin >> opcion;
     }
 
-    cout << "\n============================================\n";
-    cout << "           RESULTADOS DEL PERIODO\n";
-    cout << "============================================\n";
-    cout << fixed << setprecision(2);
+    if (opcion == 1) {
+        return "Informatica Administrativa";
+    } else if (opcion == 2) {
+        return "Medicina";
+    } else if (opcion == 3) {
+        return "Trabajo Social";
+    } else {
+        return "Derecho";
+    }
+}
 
-    for (int i = 0; i < cantidad; i++) {
-        cout << "\nEstudiante #" << i + 1 << endl;
-        cout << "Nombre: " << nombreEstudiante[i] << endl;
-        cout << "Numero de cuenta: " << numeroCuentaEstudiante[i] << endl;
-        cout << "Edad: " << edadEstudiante[i] << endl;
-        cout << "Sexo: " << sexoEstudiante[i] << endl;
-        cout << "Carrera: " << carreraEstudiante[i] << endl;
+int main() {
+    char respuesta;
 
-        cout << "Nota 1: " << nota1[i]
-             << " | Ponderada (25%): " << pond1[i]
-             << " | Observacion 1: " << observacion1[i] << endl;
+    cout << "=== Programa de Gestion de Estudiantes ===" << endl;
 
-        cout << "Nota 2: " << nota2[i]
-             << " | Ponderada (35%): " << pond2[i]
-             << " | Observacion 2: " << observacion2[i] << endl;
+    do {
+        cout << "\nEstudiante " << i + 1 << endl;
 
-        cout << "Nota 3: " << nota3[i]
-             << " | Ponderada (40%): " << pond3[i]
-             << " | Observacion 3: " << observacion3[i] << endl;
+        cout << "Ingrese el nombre del estudiante: ";
+        cin >> nombresEstudiantes[i];
 
-        cout << "Nota final: " << notaFinal[i] << endl;
-        cout << "Ponderacion: " << ponderacionFinal[i] << endl;
-        cout << "--------------------------------------------\n";
+        cout << "Ingrese el numero de cuenta del estudiante: ";
+        cin >> numeroCuentaEstudiante[i];
+
+        cout << "Ingrese la edad del estudiante: ";
+        cin >> edadEstudiante[i];
+        while (edadEstudiante[i] < 0 || edadEstudiante[i] > 100) {
+            cout << "Edad fuera de rango" << endl;
+            cout << "Ingrese la edad del estudiante: ";
+            cin >> edadEstudiante[i];
+        }
+
+        cout << "Ingrese el sexo del estudiante (M/F): ";
+        cin >> sexoEstudiante[i];
+        sexoEstudiante[i] = aMayuscula(sexoEstudiante[i]);
+        while (sexoEstudiante[i] != 'M' && sexoEstudiante[i] != 'F') {
+            cout << "Ingrese M o F: ";
+            cin >> sexoEstudiante[i];
+            sexoEstudiante[i] = aMayuscula(sexoEstudiante[i]);
+        }
+
+        carreraEstudiante[i] = elegirCarrera();
+
+        notas1[i] = pedirNota("Ingrese la nota del I parcial (0-100): ");
+        notas2[i] = pedirNota("Ingrese la nota del II parcial (0-100): ");
+        notas3[i] = pedirNota("Ingrese la nota del III parcial (0-100): ");
+
+        // Ponderaciones por parcial
+        pond1[i] = notas1[i] * 0.25;
+        pond2[i] = notas2[i] * 0.35;
+        pond3[i] = notas3[i] * 0.40;
+
+        // Observaciones por parcial
+        obsParcial1[i] = evaluarEstado(notas1[i]);
+        obsParcial2[i] = evaluarEstado(notas2[i]);
+        obsParcial3[i] = evaluarEstado(notas3[i]);
+
+        // Nota final y observacion general
+        notasFinales[i] = pond1[i] + pond2[i] + pond3[i];
+        observacionEstudiante[i] = evaluarEstado(notasFinales[i]);
+
+        cout << "La nota final del estudiante " << nombresEstudiantes[i]
+             << " es: " << notasFinales[i] << " (" << observacionEstudiante[i] << ")" << endl;
+
+        i++;
+
+        if (i < 15) {
+            cout << "Desea ingresar otro estudiante? (s/n): ";
+            cin >> respuesta;
+            respuesta = aMayuscula(respuesta);
+        } else {
+            respuesta = 'N';
+        }
+
+    } while (respuesta == 'S');
+
+    // Resumen de estudiantes ingresados
+    cout << "\n=== Resumen de Estudiantes ===" << endl;
+    for (int j = 0; j < i; j++) {
+        cout << "\nEstudiante " << j + 1 << endl;
+        cout << "Nombre: " << nombresEstudiantes[j] << endl;
+        cout << "Cuenta: " << numeroCuentaEstudiante[j] << endl;
+        cout << "Edad: " << edadEstudiante[j] << endl;
+        cout << "Sexo: " << sexoEstudiante[j] << endl;
+        cout << "Carrera: " << carreraEstudiante[j] << endl;
+        cout << "I Parcial: " << notas1[j] << " | Pond: " << pond1[j] << " | " << obsParcial1[j] << endl;
+        cout << "II Parcial: " << notas2[j] << " | Pond: " << pond2[j] << " | " << obsParcial2[j] << endl;
+        cout << "III Parcial: " << notas3[j] << " | Pond: " << pond3[j] << " | " << obsParcial3[j] << endl;
+        cout << "Nota final: " << notasFinales[j] << " | Observacion: " << observacionEstudiante[j] << endl;
     }
 
     return 0;
