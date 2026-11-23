@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 int main () {
-int numeros [] = {11, 22, 33, 44, 55};
+int numeros [] = {22, 44, 33, 11, 55};
 int i,j,aux;
 //algoritomo del metodo burbuja 
 for(i=0;i<5;i++){
