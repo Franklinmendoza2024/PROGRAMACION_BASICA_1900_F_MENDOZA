@@ -1,51 +1,62 @@
 #include <iostream>
 using namespace std;
-int main () {
-    // arreglo de numeros a ordenar
-int numeros [] = {22, 44, 33, 11, 55};
-//  i = contador de ciclos, j = contador de ciclos
-// aux = variable auxiliar para el intercambio de valores
-// aux Guarda temporalmente un valor para no sobrescribirlo ni perderlo al intercambiar dos posiciones del arreglo
-int i,j,aux;
 
-//algoritomo del metodo burbuja 
+int main() {
 
-//inicia el ciclo externo desde i = 0 mientras i sea menor que 5, sumando 1 en cada vuelta (i++).
-for(i=0;i<5;i++){ 
+    // Declaramos un arreglo con 5 números enteros.
+    int numeros[] = {33, 11, 55, 22, 44};
 
-    //inicia el ciclo interno desde j = 0 mientras j sea menor que 5, avanzando de uno en uno (j++).
-    for(j=0;j<5;j++){
+    // Declaramos las variables que utilizaremos.
+    int i, j, aux;
 
-        //comprueba si el elemento actual es mayor que el elemento que está justo a su derecha.
-       if (numeros[j] > numeros[j+1] ){
+    // MÉTODO DE ORDENAMIENTO BURBUJA.
 
-        //copia el valor de numeros[j] dentro de aux
-        aux = numeros[j];
+    // Este ciclo controla las pasadas que realizará el algoritmo.
+    // Como tenemos 5 elementos, realizaremos 5 pasadas.
+    for(i = 0; i < 5; i++) {
 
-        //mueve el valor menor (que estaba a la derecha) hacia la posición j (a la izquierda).
-        numeros[j] = numeros[j+1];
+        // Este ciclo recorre el arreglo y compara los números vecinos.
+        // j < 4 evita acceder a una posición fuera del arreglo.
+        for(j = 0; j < 4; j++) {
 
-        //coloca el valor guardado en aux (el mayor) en la posición j + 1 (a la derecha).
-        numeros[j+1] = aux;
+            // Comparamos el elemento actual con el siguiente.
+            // Si el actual es mayor, debemos intercambiarlos.
+            if(numeros[j] > numeros[j + 1]) {
+
+                // Guardamos temporalmente el número actual.
+                aux = numeros[j];
+
+                // Colocamos el número siguiente en la posición actual.
+                numeros[j] = numeros[j + 1];
+
+                // Colocamos el número guardado en la posición siguiente.
+                // Así completamos el intercambio.
+                numeros[j + 1] = aux;
+            }
         }
     }
-}
 
-cout<<"orden ascendente: "; 
+    // MOSTRAR LOS NÚMEROS EN ORDEN ASCENDENTE.
 
-//recorre los índices del arreglo desde 0 hasta 4
-for(i=0;i<5;i++){
-    cout<<numeros[i]<<" ";
-}
+    cout << "Orden ascendente: ";
 
+    // Recorremos el arreglo desde la posición 0 hasta la 4.
+    for(i = 0; i < 5; i++) {
 
-cout<<"\norden decendente: ";
+        // Mostramos cada elemento del arreglo.
+        cout << numeros[i] << " ";
+    }
 
-//inicia i en 4 (último índice del arreglo), continúa mientras i sea mayor o igual que 0 (i >= 0) y resta 1 en cada paso (i--).
-for(i=4;i>=0;i--){
-cout<<numeros[i]<<" "; 
+    // MOSTRAR LOS NÚMEROS EN ORDEN DESCENDENTE.
 
-}
+    cout << "\nOrden descendente: ";
+
+    // Recorremos el arreglo desde la última posición hasta la primera.
+    for(i = 4; i >= 0; i--) {
+
+        // Mostramos los elementos en orden inverso.
+        cout << numeros[i] << " ";
+    }
 
     return 0;
 }
